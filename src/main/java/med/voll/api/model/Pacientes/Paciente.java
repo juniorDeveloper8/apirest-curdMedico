@@ -1,7 +1,7 @@
 package med.voll.api.model.Pacientes;
 
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -11,6 +11,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import med.voll.api.Data.DTOConsultas.DatosActualizacionPaciente;
+import med.voll.api.Data.DTOConsultas.DatosRegistroPaciente;
 import med.voll.api.model.Direccion;
 
 @Table(name = "pacientes")
@@ -27,12 +29,39 @@ public class Paciente {
   private Long id;
   private String nombre;
   private String email;
+
   private String telefono;
+
   private String documento;
 
-  @Enumerated
+  @Embedded
   private Direccion direccion;
-  // esto es para hacer un delete logico del usuario si borrar el registro de la
-  // base de datos
-  private boolean activo;
+
+  private Boolean activo;
+
+  public Paciente(DatosRegistroPaciente datos) {
+    this.activo = true;
+    this.nombre = datos.nombre();
+    this.email = datos.email();
+    this.telefono = datos.telefono();
+    this.documento = datos.documento();
+    this.direccion = new Direccion(datos.direccion());
+  }
+
+  public void actualizarInformacoes(DatosActualizacionPaciente datos) {
+    if (datos.nombre() != null) {
+      this.nombre = datos.nombre();
+    }
+    if (datos.telefono() != null) {
+      this.telefono = datos.telefono();
+    }
+    if (datos.direccion() != null) {
+      this.direccion.actualizarDatos(datos.direccion());
+    }
+
+  }
+
+  public void eliminar() {
+    this.activo = false;
+  }
 }
