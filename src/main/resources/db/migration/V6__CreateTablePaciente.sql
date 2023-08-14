@@ -10,7 +10,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema prueba
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `prueba` ;
 
 -- -----------------------------------------------------
 -- Schema prueba
@@ -21,7 +20,6 @@ USE `prueba` ;
 -- -----------------------------------------------------
 -- Table `prueba`.`paciente`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `prueba`.`paciente` ;
 
 CREATE TABLE IF NOT EXISTS `prueba`.`paciente` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
